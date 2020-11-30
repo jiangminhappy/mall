@@ -28,17 +28,22 @@ export default {
   },
   mounted() {
     this.scroll = new BScroll(this.$refs.wrapper, {
+       // 开启点击事件,默认是false
       click: true,
+      // 0和1不监听滚动事件,2监听但是不监听手指松开后的滑动距离,3全部监听
       probeType: this.probeType,
+       // 是否开启监听滚动到底部事件
       pullUpLoad: this.pullUpLoad
     });
 
     // 监听滚动到的位置
-    this.scroll.on('scroll', (position) => {
+    if(this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on('scroll', (position) => {
       // console.log(position)
       this.$emit('scroll', position)
     })
 
+    }
     // 上拉加载更多
     this.scroll.on('pullingUp', () => {
       // console.log('ascasc')
@@ -57,9 +62,14 @@ export default {
     refresh() {
       this.scroll && this.scroll.refresh()
     },
+    // 获取滚动的纵向的距离
     getScrollY() {
         return this.scroll ? this.scroll.y : 0
-      }
+      },
+    // 滚动到指定的位置
+    scrollToElement(el, time) {
+      this.scroll.scrollToElement(el, time);
+    }
   }
 }
 </script>

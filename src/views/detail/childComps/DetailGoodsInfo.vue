@@ -34,6 +34,7 @@ export default {
     imgLoad() {
       if(++this.count === this.imagesLength) {
         this.$emit('imageLoad')
+        console.log(this.counter);
       }
     }
   },
